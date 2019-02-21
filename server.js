@@ -6,9 +6,12 @@ const morgan = require('morgan');
 const app = express();
 const port = 3001;
 
+const cors = require('cors');
+app.use(cors({optionSuccessStatus: 200}));
+
 app.use(morgan('common'));
 
-app.get('/', (req, res) => {
+app.get('/api/whoami', (req, res) => {
     res.json({
         "ipaddress": req.header('x-forwarded-for') || req.connection.remoteAddress,
         "language": req.headers['accept-language'],
