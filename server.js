@@ -8,6 +8,16 @@ const port = 3001;
 
 app.use(morgan('common'));
 
+app.get('/', (req, res) => {
+    console.log(`The request is: ${req}`);
+    //need ipaddress, language, software
+    res.json({
+        "ipaddress": req.header('x-forwarded-for') || req.connection.remoteAddress,
+        "language": req.headers['accept-language'],
+        "software": req.headers['user-agent']
+    });
+});
+
 app.get('*', (req, res) => {
     res.json({message: 'Page not found'})
 });
